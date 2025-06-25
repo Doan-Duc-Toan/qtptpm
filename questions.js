@@ -35,7 +35,7 @@ const questions = [
             "Đầu ra là thời lượng hành động",
             "Phạm vi yêu cầu được xác định trong quá trình cập nhật tài liệu ở đầu ra"
         ],
-        correct: [1, 3],
+        correct: [0, 1, 2],
         type: "multiple",
         explanation: "ITTO framework: Tools & Techniques bao gồm expert judgment và analysis. Outputs thường bao gồm document updates mà scope requirements có thể được refined."
     },
@@ -76,9 +76,9 @@ const questions = [
             "Những điểm cần cải thiện của đội ngũ",
             "Những điều khoản hợp đồng mua bán chưa rõ ràng"
         ],
-        correct: [0, 2, 3, 4, 5],
+        correct: [0, 1, 2, 3, 4, 5],
         type: "multiple",
-        explanation: "Tất cả trừ B đều đúng. Weaknesses là internal factors. B là external factor về competitors, thuộc về Threats chứ không phải Weaknesses."
+        explanation: "Tất cả đều đúng. Weaknesses là internal factors. B là external factor về competitors, thuộc về Threats chứ không phải Weaknesses."
     },
     {
         id: 7,

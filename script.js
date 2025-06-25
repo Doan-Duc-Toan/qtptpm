@@ -1,3 +1,10 @@
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 class ImmediateFeedbackQuiz {
     constructor() {
         this.currentQuestion = 0;
@@ -9,6 +16,8 @@ class ImmediateFeedbackQuiz {
         
         this.initializeElements();
         this.setupEventListeners();
+
+        shuffleArray(questions);
         this.initializeQuestionStates();
         this.loadQuestion();
         this.updateProgress();
@@ -81,6 +90,7 @@ class ImmediateFeedbackQuiz {
             this.hideFeedback();
         }
     }
+    
     
     renderAnswerButtons() {
         const question = questions[this.currentQuestion];
