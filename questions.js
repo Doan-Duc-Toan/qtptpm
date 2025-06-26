@@ -363,7 +363,7 @@ const questions = [
             "Có tính đơn nhất",
             "Các dự án khác nhau có mục đích và phạm vi khác nhau"
         ],
-        correct: [0, 1, 2, 3],
+        correct: [0, 1, 2],
         type: "multiple",
         explanation: "Tất cả đều đúng. Đây là 4 đặc điểm cơ bản của dự án theo PMI: Temporary, Unique product/service/result, Progressive elaboration, và mỗi dự án có purpose/scope riêng biệt."
     },
@@ -650,7 +650,7 @@ const questions = [
             "Người lãnh đạo thay người quản lý phải nhận ra sự phức tạp của môi trường",
             "Các dự án thất bại chủ yếu đến từ nguyên nhân quản lý"
         ],
-        correct: [0, 1, 2, 3, 4, 5],
+        correct: [0, 1, 2, 3, 5],
         type: "multiple",
         explanation: "Tất cả đều đúng. Đây là các đặc điểm và trách nhiệm cơ bản của project management và project manager role: central connector, full-time job, lifecycle knowledge, evolving roles, environmental complexity awareness, management as primary failure cause."
     },
