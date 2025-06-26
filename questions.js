@@ -89,7 +89,7 @@ const questions = [
             "Điều chỉnh mục tiêu của dự án",
             "Xác định đường đi tới mục tiêu của dự án"
         ],
-        correct: [0, 1, 2, 3],
+        correct: [0, 2, 3],
         type: "multiple",
         explanation: "Planning phase bao gồm tất cả: thiết lập scope, xác định requirements, điều chỉnh objectives, và xác định approach để đạt mục tiêu."
     },
