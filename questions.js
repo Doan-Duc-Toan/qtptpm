@@ -232,7 +232,7 @@ const questions = [
             "Định hướng về tương lai",
             "Hợp nhất các thành viên"
         ],
-        correct: [0, 2, 3],
+        correct: [0, 1, 2, 3],
         type: "multiple",
         explanation: "A, C, D đúng. Leadership skills bao gồm vision setting & team mobilization, future orientation, và unity building. B không phải core leadership skill trong standard framework."
     },
