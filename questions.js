@@ -246,7 +246,7 @@ const questions = [
             "Phân tích các yêu cầu đầu tư",
             "Phân công trách nhiệm cho các bộ phận thực hiện"
         ],
-        correct: [0, 1, 3, 4],
+        correct: [0, 1, 2,3, 4],
         type: "multiple",
         explanation: "A, B, D, E đúng. Project initiation bao gồm defining project, requirements identification, investment analysis, và responsibility assignment. C không phải core component của initiation."
     },
@@ -575,7 +575,7 @@ const questions = [
     },
     {
         id: 44,
-        question: "Trong kỹ năng giao tiếp D.E.S.C, Thành Nam thiếu yếu tố gì khi so sánh workload với Thủy? (Nhiều đáp án đúng)",
+        question: "Trong kỹ năng giao tiếp, phương pháp trình bày D.E.S.C gợi ý 4 yếu tố: Describe/Mô tả; Express/Giải thích; Specify/Nêu ý kiến; Choose(Consequences)/Phân tích ưu nhược điểm về ý kiến. Tuy nhiên, đoạn hội thoại ngắn sau đây cho thấy cách trình bày của bạn Thành Nam bị thiếu 2 yếu tố là gì? Sếp: giao cho Thành Nam phụ trách phát triển tính năng Z1 và Z2. Thành Nam: Oh. Thủy dang phụ trách có mỗi 1 tính năng X1. Em thì đang phụ trách cả tính năng Y1, Y2, Y3. Vì vậy em bận hơn Xếp: (không thoải mái)(nhiều đáp án)",
         options: [
             "thiếu Describe",
             "thiếu Express",
@@ -622,7 +622,7 @@ const questions = [
             "Phân tích các yêu cầu đầu tư",
             "Phân công trách nhiệm cho các bộ phận thực hiện"
         ],
-        correct: [0, 1, 2, 3],
+        correct: [0, 1, 2, 3, 4],
         type: "multiple",
         explanation: "A, B, C, D đúng. Project initiation bao gồm defining project, requirements identification, priority determination, investment analysis. E (phân công trách nhiệm) thường thuộc planning phase."
     },
