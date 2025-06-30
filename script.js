@@ -2068,6 +2068,7 @@ let score = 0;
 let userAnswers = [];
 let selectedAnswers = [];
 let shuffleEnabled = true; // Mặc định bật xáo trộn
+let isAnswerSubmitted = false; // Theo dõi trạng thái đã submit đáp án
 
 // Hàm xáo trộn mảng (Fisher-Yates shuffle)
 function shuffleArray(array) {
@@ -2122,6 +2123,7 @@ function initQuiz() {
     score = 0;
     userAnswers = [];
     selectedAnswers = [];
+    isAnswerSubmitted = false;
 
     // Xáo trộn dữ liệu quiz
     quizData = shuffleQuizData();
@@ -2199,9 +2201,11 @@ function loadQuestion() {
     const imgElement = document.getElementById('question-img');
     const nextBtn = document.getElementById('next-btn');
 
-    // Reset selected answers
+    // Reset trạng thái
     selectedAnswers = [];
+    isAnswerSubmitted = false;
     nextBtn.disabled = true;
+    nextBtn.textContent = currentQuestionIndex === quizData.length - 1 ? 'Xem kết quả' : 'Câu tiếp theo';
 
     // Hiển thị số câu hỏi
     document.getElementById('current-question').textContent = currentQuestionIndex + 1;
@@ -2238,13 +2242,28 @@ function loadQuestion() {
 
         answersElement.appendChild(answerDiv);
     });
+
+    // Thêm nút submit đáp án cho multiple choice
+    if (currentQuestion.type === 'multiple') {
+        const submitDiv = document.createElement('div');
+        submitDiv.style.cssText = 'text-align: center; margin-top: 1rem;';
+        submitDiv.innerHTML = `
+            <button class="btn btn-secondary" id="submit-answer-btn" onclick="submitAnswer()" disabled>
+                ✅ Xác nhận đáp án
+            </button>
+        `;
+        answersElement.appendChild(submitDiv);
+    }
 }
 
 // Xử lý chọn đáp án
 function selectAnswer(index) {
+    if (isAnswerSubmitted) return; // Không cho phép thay đổi sau khi đã submit
+
     const currentQuestion = quizData[currentQuestionIndex];
     const answerOptions = document.querySelectorAll('.answer-option');
     const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-answer-btn');
 
     if (currentQuestion.type === 'single') {
         // Bỏ chọn tất cả
@@ -2255,6 +2274,12 @@ function selectAnswer(index) {
         answerOptions[index].classList.add('selected');
         document.getElementById(`option_${index}`).checked = true;
         selectedAnswers = [index];
+
+        // Tự động submit cho single choice
+        setTimeout(() => {
+            submitAnswer();
+        }, 500);
+
     } else {
         // Multiple choice
         const checkbox = document.getElementById(`option_${index}`);
@@ -2270,15 +2295,24 @@ function selectAnswer(index) {
             checkbox.checked = true;
             selectedAnswers.push(index);
         }
-    }
 
-    // Enable next button nếu có đáp án được chọn
-    nextBtn.disabled = selectedAnswers.length === 0;
+        // Enable submit button nếu có đáp án được chọn
+        if (submitBtn) {
+            submitBtn.disabled = selectedAnswers.length === 0;
+        }
+    }
 }
 
-// Chuyển câu hỏi tiếp theo
-function nextQuestion() {
+// Submit đáp án và hiển thị kết quả
+function submitAnswer() {
+    if (isAnswerSubmitted) return;
+
     const currentQuestion = quizData[currentQuestionIndex];
+    const answerOptions = document.querySelectorAll('.answer-option');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-answer-btn');
+
+    isAnswerSubmitted = true;
 
     // Lưu đáp án của user
     userAnswers.push([...selectedAnswers]);
@@ -2289,37 +2323,82 @@ function nextQuestion() {
         score++;
     }
 
-    // Hiển thị kết quả câu hỏi
-    showQuestionResult();
-
-    setTimeout(() => {
-        currentQuestionIndex++;
-
-        if (currentQuestionIndex < quizData.length) {
-            loadQuestion();
-        } else {
-            showResults();
-        }
-    }, 1500);
-}
-
-// Hiển thị kết quả câu hỏi
-function showQuestionResult() {
-    const currentQuestion = quizData[currentQuestionIndex];
-    const answerOptions = document.querySelectorAll('.answer-option');
-    const nextBtn = document.getElementById('next-btn');
-
-    nextBtn.disabled = true;
-
+    // Hiển thị kết quả
     answerOptions.forEach((option, index) => {
         option.onclick = null; // Vô hiệu hóa click
 
         if (currentQuestion.correct.includes(index)) {
             option.classList.add('correct');
+            option.innerHTML += ' <span style="float: right; color: #4caf50; font-weight: bold;">✅</span>';
         } else if (selectedAnswers.includes(index)) {
             option.classList.add('incorrect');
+            option.innerHTML += ' <span style="float: right; color: #f44336; font-weight: bold;">❌</span>';
         }
     });
+
+    // Hiển thị thông báo kết quả
+    showAnswerFeedback(isCorrect);
+
+    // Enable next button
+    nextBtn.disabled = false;
+
+    // Ẩn submit button
+    if (submitBtn) {
+        submitBtn.style.display = 'none';
+    }
+}
+
+// Hiển thị phản hồi về đáp án
+function showAnswerFeedback(isCorrect) {
+    const answersElement = document.getElementById('answers');
+
+    // Xóa feedback cũ nếu có
+    const existingFeedback = document.getElementById('answer-feedback');
+    if (existingFeedback) {
+        existingFeedback.remove();
+    }
+
+    const feedbackDiv = document.createElement('div');
+    feedbackDiv.id = 'answer-feedback';
+    feedbackDiv.style.cssText = `
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+        animation: fadeIn 0.5s ease-in;
+        ${isCorrect ?
+            'background: #e8f5e8; border: 2px solid #4caf50; color: #2e7d32;' :
+            'background: #ffebee; border: 2px solid #f44336; color: #c62828;'
+        }
+    `;
+
+    const currentQuestion = quizData[currentQuestionIndex];
+    const correctAnswers = currentQuestion.correct.map(idx => currentQuestion.options[idx]).join(', ');
+
+    feedbackDiv.innerHTML = `
+        <div style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+            ${isCorrect ? '🎉 Chính xác!' : '😔 Chưa đúng!'}
+        </div>
+        <div style="font-size: 0.9rem; opacity: 0.8;">
+            Điểm hiện tại: ${score}/${currentQuestionIndex + 1}
+        </div>
+        ${!isCorrect ? `<div style="font-size: 0.9rem; margin-top: 0.5rem;">Đáp án đúng: ${correctAnswers}</div>` : ''}
+    `;
+
+    answersElement.appendChild(feedbackDiv);
+}
+
+// Chuyển câu hỏi tiếp theo
+function nextQuestion() {
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < quizData.length) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
 }
 
 // Hiển thị kết quả cuối cùng
@@ -2398,12 +2477,31 @@ document.addEventListener('keydown', (e) => {
         nextQuestion();
     }
 
-    // Phím số để chọn đáp án nhanh
-    if (e.key >= '1' && e.key <= '9') {
+    // Phím số để chọn đáp án nhanh (chỉ khi chưa submit)
+    if (!isAnswerSubmitted && e.key >= '1' && e.key <= '9') {
         const index = parseInt(e.key) - 1;
         const answerOptions = document.querySelectorAll('.answer-option');
         if (answerOptions[index]) {
             selectAnswer(index);
         }
     }
+
+    // Phím Space để submit đáp án multiple choice
+    if (e.key === ' ' && !isAnswerSubmitted) {
+        const submitBtn = document.getElementById('submit-answer-btn');
+        if (submitBtn && !submitBtn.disabled) {
+            e.preventDefault();
+            submitAnswer();
+        }
+    }
 });
+
+// Thêm CSS animation
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+`;
+document.head.appendChild(style);
