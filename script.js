@@ -183,7 +183,7 @@ const originalQuizData = [
             "Đặc trưng thiếu chắc chắn cao, do nhiễu, lỗi, mất mát, sai lệch,... trong dữ liệu"
         ],
         "correct": [3],
-        "type": "",
+        "type": "multiple",
         "explanation": ""
     },
     {
