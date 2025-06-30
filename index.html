@@ -3,79 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Ôn Tập Quản Lý Dự Án - Feedback Ngay</title>
+    <title>Quiz App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Quiz Ôn Tập Quản Lý Dự Án</h1>
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-                <span class="progress-text" id="progress-text">0 / 0</span>
+            <h1>🧠 Quiz Challenge</h1>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="question-counter">
+                <span id="current-question">1</span> / <span id="total-questions">5</span>
             </div>
         </header>
-        
-        <div id="quiz-container" class="quiz-container">
-            <div id="question-container">
-                <div class="question-header">
-                    <div id="question-counter"></div>
-                    <div id="score-display" class="score-display">
-                        Đúng: <span id="correct-count">0</span> | 
-                        Sai: <span id="incorrect-count">0</span>
+
+        <main>
+            <div class="quiz-container" id="quiz-container">
+                <div class="question-card">
+                    <div class="question-image" id="question-image" style="display: none;">
+                        <img id="question-img" src="" alt="Question Image">
+                    </div>
+                    <h2 class="question" id="question"></h2>
+                    <div class="answers" id="answers"></div>
+                    <div class="quiz-controls">
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>
+                            Câu tiếp theo
+                        </button>
                     </div>
                 </div>
-                
-                <div id="question-text" class="question-text"></div>
-                <div id="question-type-hint" class="question-type-hint"></div>
-                
-                <div id="answer-buttons" class="answer-buttons"></div>
-                
-                <div id="feedback-container" class="feedback-container" style="display:none">
-                    <div id="feedback-result" class="feedback-result"></div>
-                    <div id="feedback-explanation" class="feedback-explanation"></div>
+            </div>
+
+            <div class="result-container" id="result-container" style="display: none;">
+                <div class="result-card">
+                    <h2>🎉 Kết quả của bạn</h2>
+                    <div class="score" id="final-score"></div>
+                    <div class="result-details" id="result-details"></div>
+                    <button class="btn btn-secondary" onclick="restartQuiz()">
+                        Làm lại Quiz
+                    </button>
                 </div>
             </div>
-            
-            <div class="controls">
-                <button id="prev-btn" class="btn" disabled>← Câu trước</button>
-                <button id="check-btn" class="btn check-btn" style="display:none">Kiểm tra</button>
-                <button id="next-btn" class="btn" disabled>Câu tiếp →</button>
-                <button id="finish-btn" class="btn finish-btn" style="display:none">Hoàn thành</button>
-            </div>
-        </div>
-        
-        <div id="result-container" class="result-container" style="display:none">
-            <div class="result-header">
-                <h2>🎉 Hoàn thành Quiz!</h2>
-                <div id="final-score" class="final-score"></div>
-            </div>
-            
-            <div class="result-stats">
-                <div class="stat-item correct">
-                    <div class="stat-number" id="final-correct">0</div>
-                    <div class="stat-label">Câu đúng</div>
-                </div>
-                <div class="stat-item incorrect">
-                    <div class="stat-number" id="final-incorrect">0</div>
-                    <div class="stat-label">Câu sai</div>
-                </div>
-                <div class="stat-item percentage">
-                    <div class="stat-number" id="final-percentage">0%</div>
-                    <div class="stat-label">Tỷ lệ đúng</div>
-                </div>
-            </div>
-            
-            <div id="detailed-review" class="detailed-review"></div>
-            
-            <div class="result-actions">
-                <button id="restart-btn" class="btn restart-btn">🔄 Làm lại</button>
-                <button id="review-btn" class="btn review-btn">📝 Xem chi tiết</button>
-            </div>
-        </div>
+        </main>
     </div>
-    
-    <script src="questions.js"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
