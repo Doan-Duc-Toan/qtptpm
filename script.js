@@ -182,7 +182,7 @@ const originalQuizData = [
             "Tốc độ đến liên tục của dữ liệu trong môi trường luồng",
             "Đặc trưng thiếu chắc chắn cao, do nhiễu, lỗi, mất mát, sai lệch,... trong dữ liệu"
         ],
-        "correct": [],
+        "correct": [3],
         "type": "",
         "explanation": ""
     },
