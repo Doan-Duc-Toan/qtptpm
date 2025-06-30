@@ -2368,6 +2368,7 @@ function showAnswerFeedback(isCorrect) {
         font-weight: bold;
         font-size: 1.1rem;
         animation: fadeIn 0.5s ease-in;
+        display: none;
         ${isCorrect ?
             'background: #e8f5e8; border: 2px solid #4caf50; color: #2e7d32;' :
             'background: #ffebee; border: 2px solid #f44336; color: #c62828;'
